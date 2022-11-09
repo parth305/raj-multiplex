@@ -10,7 +10,6 @@ function App() {
 
   return (
     <BrowserRouter>
-
       <Routes>
         <Route exact path="/Login" element={<Login />} />
         <Route exact path="/Forgot" element={<Forgot />} />
