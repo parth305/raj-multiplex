@@ -5,12 +5,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from './Components/Login/Login';
 import Forgot from './Components/Login/Forgot';
 import Signup from './Components/Login/Signup';
+import Home from './Components/Home';
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <BrowserRouter>
       <Routes>
+        <Route exact path="/" element={<Home />} />
         <Route exact path="/Login" element={<Login />} />
         <Route exact path="/Forgot" element={<Forgot />} />
         <Route exact path="/Signup" element={<Signup />} />
