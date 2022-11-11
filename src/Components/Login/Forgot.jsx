@@ -106,7 +106,7 @@ const Forgot = () => {
 	};
 
 	return (
-		<div className="mx-auto flex my-16 max-w-lg items-center justify-center text-black shadow-2xl py-7">
+		<div className="sm:mx-auto flex my-16 max-w-lg items-center justify-center text-black shadow-2xl py-7 mx-5">
 			<section className="flex w-full flex-col space-y-2 px-5">
 				<div className="text-center text-4xl font-medium my-9">
 					Change Password

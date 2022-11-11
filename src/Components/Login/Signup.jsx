@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {  toast, ToastContainer } from 'react-toastify';
 
 const Signup = () => {
 	const [firstName, setfirstName] = useState("");
@@ -43,13 +44,13 @@ const Signup = () => {
 				alert("Error!");
 			}
 		} else {
-			alert("Passwords do not match!");
+			toast.error('Passwords do not match!');
 		}
 	};
 	return (
-		<div className="w-full max-w-lg sm:px-5 sm:m-auto sm:my-16 shadow-2xl px-5 py-7">
+		<div className="mx-3 max-w-lg sm:px-5 sm:m-auto sm:my-16 shadow-2xl px-5 py-7">
 			<div className="text-center text-4xl font-medium my-4">Sign Up</div>
-			<form className="flex flex-wrap -mx-3 mb-6 space-y-2 md:space-y-0">
+			<form className="w-full flex flex-wrap  mb-6 space-y-2 md:space-y-0 ">
 				{/* <form action="" method="post" onSubmit={submit}> */}
 				<div className="w-full md:w-1/2 px-3 md:mb-0">
 					<label

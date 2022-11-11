@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
 	const [email, setemail] = useState();
@@ -24,7 +24,7 @@ const Login = () => {
 		}
 	};
 	return (
-		<div className="mx-1 sm:mx-auto flex my-16 max-w-lg items-center justify-center text-black shadow-2xl py-7">
+		<div className="mx-5 sm:mx-auto flex my-16 max-w-lg items-center justify-center text-black shadow-2xl py-7">
 			<form className="flex w-full flex-col space-y-10 px-5">
 				<div className="text-center text-4xl font-medium">Log In</div>
 
@@ -66,7 +66,7 @@ const Login = () => {
 					type="submit">
 					LOG IN
 				</button>
-				<section className="flex w-full flex-col space-y-5">
+				<section className="flex w-full flex-col space-y-5 text-center">
 					<Link to={"/Forgot"}>
 						<span className="transform text-center font-semibold text-gray-500 duration-300 hover:text-gray-300">
 							FORGOT PASSWORD?
