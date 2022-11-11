@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Timer from "./Timer";
 
 const Forgot = () => {
 	const [emailStage, setemailStage] = useState(true);
@@ -10,7 +11,31 @@ const Forgot = () => {
 	const [password, setpassword] = useState();
 	const [confirmPassword, setconfirmPassword] = useState();
 	const [userId, setuserId] = useState();
+	const [otpTimeout, setotpTimeout] = useState(false);
+	const [resentOtp, setresentOtp] = useState(false);
 	const navigate = useNavigate();
+
+	const resendOTP = async (e) => {
+		console.log("Inside resendOTP");
+		e.preventDefault();
+		let rep = await fetch("http://localhost:3000/auth/forget", {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				email: email,
+			}),
+		});
+		let newOtpRequest = await rep.json();
+		console.log(newOtpRequest);
+		if (newOtpRequest.response) {
+			setotpTimeout(false);
+			setresentOtp(true);
+		} else {
+			alert("Error!");
+		}
+	};
 
 	const handleEmailSubmit = async () => {
 		if (email) {
@@ -45,7 +70,7 @@ const Forgot = () => {
 				body: JSON.stringify({ email: email, otp: otp }),
 			});
 			let otpVerifyRequest = await response.json();
-			console.log(otpVerifyRequest.user._id);
+			// console.log(otpVerifyRequest);
 			if (otpVerifyRequest.response) {
 				setuserId(otpVerifyRequest.user._id);
 				setotpSent(false);
@@ -108,6 +133,16 @@ const Forgot = () => {
 				{otpSent && (
 					<>
 						<div className="w-full px-1">
+							<label
+								className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+								htmlFor="grid-first-name">
+								OTP valid for :{" "}
+								<Timer
+									resentOtp={resentOtp}
+									setresentOtp={setresentOtp}
+									setotpTimeout={setotpTimeout}
+								/>
+							</label>
 							<input
 								onChange={(e) => setotp(e.target.value)}
 								className="appearance-none block w-full  text-gray-700 border-2 border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500"
@@ -118,9 +153,9 @@ const Forgot = () => {
 							/>
 						</div>
 						<button
-							onClick={handleOtpSubmit}
+							onClick={otpTimeout ? resendOTP : handleOtpSubmit}
 							className="rounded-sm text-white bg-indigo-500 py-2 font-bold duration-300 hover:bg-indigo-700">
-							Continue
+							{otpTimeout ? "Resend OTP" : "Continue"}
 						</button>
 					</>
 				)}

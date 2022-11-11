@@ -5,6 +5,7 @@ const Signup = () => {
 	const [firstName, setfirstName] = useState("");
 	const [lastName, setlastName] = useState("");
 	const [email, setemail] = useState("");
+	const [contact, setcontact] = useState("");
 	const [password, setpassword] = useState("");
 	const [confirmPassword, setconfirmPassword] = useState("");
 	const navigate = useNavigate();
@@ -22,7 +23,7 @@ const Signup = () => {
 					name: name,
 					email: email,
 					password: password,
-					contactNumber: "910",
+					contactNumber: contact,
 				}),
 			});
 
@@ -30,7 +31,14 @@ const Signup = () => {
 			console.log(signupRequestResponse);
 
 			if (signupRequestResponse.response) {
-				navigate("/Otp", { state: { email: email } });
+				navigate("/Otp", {
+					state: {
+						name: name,
+						email: email,
+						password: password,
+						contactNumber: contact,
+					},
+				});
 			} else {
 				alert("Error!");
 			}
@@ -83,6 +91,20 @@ const Signup = () => {
 						id="email"
 						name="email"
 						type="email"
+					/>
+				</div>
+				<div className="w-full px-3">
+					<label
+						className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+						htmlFor="email">
+						Contact Number
+					</label>
+					<input
+						onChange={(e) => setcontact(e.target.value)}
+						className="appearance-none block w-full  text-gray-700 border-2 border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500"
+						id="contact"
+						name="contact"
+						type="tel"
 					/>
 				</div>
 				<div className="w-full px-3">
