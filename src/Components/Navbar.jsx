@@ -1,8 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
-    let [open,setopen]=useState(false)
-    let handleToggle=()=>{setopen(!open)}
+    let [open, setopen] = useState(false)
+    const [login, setLogin] = useState(false)
+    const [user, setUser] = useState("")
+    const navigate = useNavigate()
+    let handleToggle = () => { setopen(!open) }
+    let token = localStorage.getItem("token")
+
+    const verifyToken = async () => {
+        let res = await fetch(`http://localhost:3000/auth/token`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token: token }),
+        })
+        res = await res.json()
+
+        if (res.response) {
+            setUser(res.user)
+            setLogin(true)
+        }
+    }
+
+    useEffect(() => {
+        verifyToken()
+    }, [])
+
+
+    const logout = () => {
+        localStorage.removeItem("token")
+        navigate("/")
+    }
+
     return (
         <nav className="bg-white border-gray-200 px-2 sm:px-4 py-4 sm:py-2.5 rounded-b dark:bg-gray-900 fixed top-0 left-0 w-full">
             <div className="container flex flex-wrap justify-between items-center mx-auto w-full">
@@ -27,7 +59,7 @@ const Navbar = () => {
                         <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
                     </button>
                 </div>
-                <div className={`${open?"":"hidden"} justify-between items-center w-full md:flex md:w-auto md:order-2`} id="navbar-search">
+                <div className={`${open ? "" : "hidden"} justify-between items-center w-full md:flex md:w-auto md:order-2`} id="navbar-search">
                     <div className="relative mt-3 md:hidden">
                         <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                             <svg className="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
@@ -44,6 +76,41 @@ const Navbar = () => {
                         <li>
                             <a href="#" className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
                         </li>
+                        {login && (
+                            <>
+                                <li>
+                                    <a href="#" className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">{user.name}</a>
+                                </li>
+                                <li>
+                                    <button
+                                        onClick={() => logout()}
+                                        className="rounded-sm text-white bg-indigo-500 py-2 font-bold duration-300 hover:bg-indigo-700">
+                                        Logout
+                                    </button>
+                                </li>
+                            </>
+                        )
+                        }
+
+                        {!login && (
+                            <>
+                                <li>
+                                <button
+                                        onClick={() => navigate("/login")}
+                                        className="rounded-sm text-white bg-indigo-500 py-2 font-bold duration-300 hover:bg-indigo-700">
+                                        Sign in
+                                    </button>
+                                </li>
+                                <li>
+                                <button
+                                        onClick={() => navigate("/Signup")}
+                                        className="rounded-sm text-white bg-indigo-500 py-2 font-bold duration-300 hover:bg-indigo-700">
+                                        Sign up
+                                    </button>
+                                </li>
+                            </>
+                        )
+                        }
                     </ul>
                 </div>
             </div>
