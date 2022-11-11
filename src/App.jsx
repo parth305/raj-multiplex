@@ -6,6 +6,9 @@ import Signup from "./Components/Login/Signup";
 import Otp from "./Components/Login/Otp";
 import Home from "./Components/Home";
 import Admin from "./Components/Admin/Admin";
+import UpcomingMovies from "./Components/Admin/UpcomingMovies";
+import Booking from "./Components/Admin/Booking";
+import Carousel from "./Components/Admin/Carousel";
 function App() {
 	return (
 		<BrowserRouter>
@@ -16,6 +19,13 @@ function App() {
 				<Route exact path="/Forgot" element={<Forgot />} />
 				<Route exact path="/Signup" element={<Signup />} />
 				<Route exact path="/Admin" element={<Admin />} />
+				<Route
+					exact
+					path="/Admin/UpcomingMovies"
+					element={<UpcomingMovies />}
+				/>
+				<Route exact path="/Admin/Carousel" element={<Carousel />} />
+				<Route exact path="/Admin/Booking" element={<Booking />} />
 			</Routes>
 		</BrowserRouter>
 	);
