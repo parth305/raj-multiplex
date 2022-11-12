@@ -21,7 +21,7 @@ function Carousel() {
 				margin = 20,
 				currIndex = 0,
 				interval,
-				intervalTime = 4000;
+				intervalTime = 2500;
 
 			function init() {
 				resize();

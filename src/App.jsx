@@ -13,7 +13,6 @@ import Adminoutlet from "./Components/Admin/Adminoutlet";
 function App() {
 	return (
 		<>
-	
 			<BrowserRouter>
 				<Routes>
 					<Route exact path="/" element={<Home />} />
@@ -23,11 +22,7 @@ function App() {
 					<Route exact path="/Signup" element={<Signup />} />
 					<Route exact path="/Admin" element={<Adminoutlet />}>
 						<Route exact path="" element={<Admin />} />
-						<Route
-							exact
-							path="UpcomingMovies"
-							element={<UpcomingMovies />}
-						/>
+						<Route exact path="UpcomingMovies" element={<UpcomingMovies />} />
 						<Route exact path="Carousel" element={<Carousel />} />
 						<Route exact path="Booking" element={<Booking />} />
 					</Route>
